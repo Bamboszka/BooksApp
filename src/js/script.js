@@ -10,7 +10,7 @@
     },
     booksPanel: {
       wrapper: '.books-panel',
-      bookslist: '.books-list',
+      booksList: '.books-list',
     },
     itemBook: {
       image: '.book__image',
@@ -31,7 +31,7 @@
       const thisBooksList = this;
       thisBooksList.data = data;
       thisBooksList.initData();
-      thisBooksList.getElement();
+      thisBooksList.getElements();
       thisBooksList.initActions();
       thisBooksList.filterBooks();
       thisBooksList.determineRatingBgc();
@@ -44,13 +44,13 @@
         book.ratingWidth = book.rating * 10;
         const generatedHTML = templates.books(book);
         const utilsFunc = utils.createDOMFromHTML(generatedHTML);
-        const bookContainer = document.querySelector(select.booksPanel.bookslist);
+        const bookContainer = document.querySelector(select.booksPanel.booksList);
         bookContainer.appendChild(utilsFunc);
       }
     }
     getElements() {
       const thisBooksList = this;
-      thisBooksList.bookList = document.querySelector(select.booksPanel.bookslist);
+      thisBooksList.bookList = document.querySelector(select.booksPanel.booksList);
       thisBooksList.filter = document.querySelector(select.filters.section);
     }
     initActions() {
@@ -60,7 +60,7 @@
         if (event.target.offsetParent.classList.contains('book__image')) {
           const bookID = event.target.offsetParent.getAttribute('data-id');
           if (favoriteBooks.indexOf(bookID) == -1) {
-            event.target.offsetParent.clasList.add('favorite');
+            event.target.offsetParent.classList.add('favorite');
             favoriteBooks.push(bookID);
           } else {
             event.target.offsetParent.classList.remove('favorite');
@@ -86,7 +86,6 @@
       });
     }
     determineRatingBgc(rating) {
-      const thisBooksList = this;
       if (rating < 6) {
         return 'linear-gradient(to bottom, #fefcea 0%, #f1da36 100%';
       } else if (rating > 6 && rating <= 8) {
@@ -98,7 +97,6 @@
       }
     }
     hideBooks() {
-      const thisBooksList = this;
       for (let book of dataSource.books) {
         let ShouldBeHidden = false;
         for (let filter of filters) {
@@ -118,5 +116,5 @@
       }
     }
   }
-  const app = new BooksList();
+  new BooksList();
 }
